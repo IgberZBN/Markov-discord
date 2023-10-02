@@ -1,0 +1,30 @@
+{
+  "name": "markov-discord",
+  "version": "1.0.0",
+  "description": "Bot for text generation in Discord, based on markov chain",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IgberZBN/Markov-discord.git"
+  },
+  "author": "Igber",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IgberZBN/Markov-discord/issues"
+  },
+  "homepage": "https://github.com/IgberZBN/Markov-discord#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "mongodb": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/mongodb": "^4.0.7",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
