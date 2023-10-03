@@ -1,14 +1,14 @@
 const NEWLINE_PLACEHOLDER = "§";
 const PARAGRAPH_CHARACTER = "\n\n";
 
-const punctuation: string = `[](){}!?.,:;'"\/*&^%$_+-–—=<>@|~`
+const punctuation: string = `[](){}!?.,:;'"\/*&^%$_+-–—=<>@|~` //This will match any characteristic that is in the previously defined classification sequence
   .split("")
   .join("\\");
 const ellipsis: string = "\\.{3}";
 
 // NOTE: changed the origin config, orgin: '[a-zA-Zа-яА-ЯёЁ]+'
 const words: string = "[a-zA-ZÀ-ÖØ-öø-ÿА-ЯЁё]+"; // This regular expression matches words containing Latin and Cyrillic characters, including accented Latin characters.
-const compounds: string = `${words}-${words}`;
+const compounds: string = `${words}-${words}`; // This will match compound words, i.e. two words separated by a hyphen
 
 const newlinesRegex: RegExp = /\n\s*/g;
 const tokenizeRegex: RegExp = new RegExp(
