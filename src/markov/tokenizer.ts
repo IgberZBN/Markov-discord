@@ -1,5 +1,5 @@
 const NEWLINE_PLACEHOLDER = "§";
-const PARAGRAPH_CHARACTER = "\n\n";
+const PARAGRAPH_CHARACTER = "\n";
 
 const punctuation: string = `[](){}!?.,:;'"\/*&^%$_+-–—=<>@|~` //This will match any characteristic that is in the previously defined classification sequence
   .split("")
