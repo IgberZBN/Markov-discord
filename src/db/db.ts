@@ -1,11 +1,5 @@
 import { Collection, Db, InsertOneResult, MongoClient } from "mongodb";
 import Message from "./model/Message";
-import getEnv from "../utils/getEnvVar";
-import * as dotenv from "dotenv";
-
-export * from "colors";
-
-dotenv.config();
 
 let singletonDB: Db;
 let singletonCollection: Collection<Message>;
@@ -13,10 +7,10 @@ let singletonCollection: Collection<Message>;
 async function databaseConnect(): Promise<Db> {
   if (singletonDB) return singletonDB;
 
-  const client = new MongoClient(getEnv("MONGO_HOST"));
+  const client = new MongoClient(process.env.MONGO_HOST);
   await client.connect();
 
-  singletonDB = client.db(getEnv("MONGO_DATABASE"));
+  singletonDB = client.db(process.env.MONGO_DATABASE);
 
   console.log("Database connect success!".green);
 
@@ -28,7 +22,7 @@ async function getDatabaseCollection(): Promise<Collection<Message>> {
 
   const db: Db = await databaseConnect();
 
-  singletonCollection = db.collection(getEnv("MONGO_DOCUMENT"));
+  singletonCollection = db.collection(process.env.MONGO_DOCUMENT);
 
   return singletonCollection;
 }
