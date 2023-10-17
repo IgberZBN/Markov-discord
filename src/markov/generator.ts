@@ -1,5 +1,4 @@
 import TextGenOpts from "./interface/TextGenOpts";
-import { text } from "./text";
 import { textify, tokenize } from "./tokenizer";
 
 type Transitions = Record<string, string[]>;
@@ -71,6 +70,18 @@ let corpus: string[];
 let samples: string[][];
 let transitions: Transitions;
 
+function formatText(arr: string[]) {
+  const NEWLINE_PLACEHOLDER: string = "§";
+  let newLineCount: number = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === NEWLINE_PLACEHOLDER) newLineCount++;
+    if (newLineCount === 2) {
+      arr.splice(i + 1);
+      break;
+    }
+  }
+}
+
 export function generate(options: TextGenOpts): string {
   const {
     source = "",
@@ -100,16 +111,4 @@ export function updateToken(source: string, sampleSize: number): void {
   corpus = tokenize(String(source));
   samples = sliceCorpus(corpus, sampleSize);
   transitions = collectTransitions(samples);
-}
-
-function formatText(arr: string[]) {
-  const NEWLINE_PLACEHOLDER: string = "§";
-  let newLineCount: number = 0;
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] === NEWLINE_PLACEHOLDER) newLineCount++;
-    if (newLineCount === 2) {
-      arr.splice(i + 1);
-      break;
-    }
-  }
 }
