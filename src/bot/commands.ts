@@ -1,11 +1,17 @@
-import { ApplicationCommandOptionType, REST, Routes } from "discord.js";
+import {
+  ApplicationCommandOptionType,
+  PermissionFlagsBits,
+  REST,
+  Routes,
+} from "discord.js";
 import dotenv from "dotenv";
 dotenv.config();
 
 const commands: {}[] = [
   {
-    name: "words-count",
+    name: "config-length",
     description: "Define the number of words in text generation",
+    default_member_permissions: Number(PermissionFlagsBits.BanMembers),
     options: [
       {
         name: "size",
@@ -16,8 +22,9 @@ const commands: {}[] = [
     ],
   },
   {
-    name: "sample-size",
+    name: "config-sampling",
     description: "Define the number of words in text generation",
+    default_member_permissions: Number(PermissionFlagsBits.BanMembers),
     options: [
       {
         name: "size",
@@ -28,8 +35,9 @@ const commands: {}[] = [
     ],
   },
   {
-    name: "delay-send",
+    name: "config-delay",
     description: "Sets the delay time for sending the message",
+    default_member_permissions: Number(PermissionFlagsBits.BanMembers),
     options: [
       {
         name: "minutes",
@@ -38,6 +46,12 @@ const commands: {}[] = [
         required: true,
       },
     ],
+  },
+  {
+    name: "db-size",
+    default_member_permissions: Number(PermissionFlagsBits.BanMembers),
+    description:
+      "Displays in KB the size of the database and the number of messages stored",
   },
 ];
 

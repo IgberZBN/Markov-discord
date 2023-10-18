@@ -7,10 +7,10 @@ let singletonCollection: Collection<Message>;
 async function databaseConnect(): Promise<Db> {
   if (singletonDB) return singletonDB;
 
-  const client = new MongoClient(process.env.MONGO_HOST);
+  const client = new MongoClient(process.env.MONGO_HOST as string);
   await client.connect();
 
-  singletonDB = client.db(process.env.MONGO_DATABASE);
+  singletonDB = client.db(process.env.MONGO_DATABASE as string);
 
   console.log("Database connect success!".green);
 
@@ -22,7 +22,7 @@ async function getDatabaseCollection(): Promise<Collection<Message>> {
 
   const db: Db = await databaseConnect();
 
-  singletonCollection = db.collection(process.env.MONGO_DOCUMENT);
+  singletonCollection = db.collection(process.env.MONGO_DOCUMENT as string);
 
   return singletonCollection;
 }
@@ -37,4 +37,10 @@ export async function insertMessage(
 ): Promise<InsertOneResult<Message>> {
   console.log("Request: Insert Message".yellow);
   return (await getDatabaseCollection()).insertOne({ message });
+}
+
+export async function getSize() {
+  console.log("Request: Stats indexSize".yellow);
+  const { objects, indexSize } = await (await databaseConnect()).stats();
+  return { objects, indexSize };
 }
