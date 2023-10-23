@@ -1,3 +1,4 @@
+import configParam from "../param";
 import TextGenOpts from "./interface/TextGenOpts";
 import { textify, tokenize } from "./tokenizer";
 
@@ -32,11 +33,8 @@ function collectTransitions(samples: string[][]): Transitions {
   }, {});
 }
 
-function createChain(
-  startText: string | null,
-  transitions: Transitions,
-): string[] {
-  const head: string = startText ?? pickRandom(Object.keys(transitions));
+function createChain(transitions: Transitions): string[] {
+  const head: string = pickRandom(Object.keys(transitions));
   return tokenize(head);
 }
 
@@ -50,12 +48,8 @@ function predictNext(
   return pickRandom(nextWords);
 }
 
-function* generateChain(
-  startText: string | null,
-  transitions: Transitions,
-  sampleSize: number,
-) {
-  const chain: string[] = createChain(startText, transitions);
+function* generateChain(transitions: Transitions, sampleSize: number) {
+  const chain: string[] = createChain(transitions);
 
   while (true) {
     const state = predictNext(chain, transitions, sampleSize);
@@ -85,9 +79,8 @@ function formatText(arr: string[]) {
 export function generate(options: TextGenOpts): string {
   const {
     source = "",
-    start = null,
-    wordsCount = 200,
-    sampleSize = 3,
+    wordsCount = configParam.wordsCount,
+    sampleSize = configParam.sampleSize,
   } = options;
 
   if (!source) throw new Error("The source text cannot be empty.");
@@ -101,7 +94,7 @@ export function generate(options: TextGenOpts): string {
     transitions = collectTransitions(samples);
   }
 
-  const generator: Generator = generateChain(start, transitions, sampleSize);
+  const generator: Generator = generateChain(transitions, sampleSize);
   const chain: string[] = range(wordsCount).map((_) => generator.next().value);
   formatText(chain);
   return textify(chain);

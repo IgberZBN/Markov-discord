@@ -5,11 +5,6 @@ export default interface TextGenOpts {
   source: string;
 
   /**
-   * Optional starting point for text generation.
-   */
-  start?: string | null;
-
-  /**
    * The desired number of words in the generated text.
    */
   wordsCount?: number;
